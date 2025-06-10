@@ -5,7 +5,7 @@
             "name": "Spring Boot-SmartcontactmanagerApplication<smartcontactmanager>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
-            "mainClass": "com.smart.smartcontactmanager.SmartcontactmanagerApplication",
+            "mainClass": "com.smart.SmartcontactmanagerApplication",
             "projectName": "smartcontactmanager",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
