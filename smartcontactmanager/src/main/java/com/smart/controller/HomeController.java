@@ -9,22 +9,30 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.smart.dao.UserRepository;
 import com.smart.models.Contact;
 import com.smart.models.User;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 public class HomeController {
-    @Autowired
-    private UserRepository userRepository;
+    // @Autowired
+    // private UserRepository userRepository;
 
-    @GetMapping("/test")
-    @ResponseBody
-    public String test() {
-        User user = new User();
-        user.setName("Samarth Kalegaonkar");
-        user.setEmail("kalegaonkarsamarth@gmailom");
-        user.setRole("Engineer");
-        Contact contact = new Contact();
-        user.getContacts().add(contact);
-        userRepository.save(user);
-        return "Working";
+    // @GetMapping("/test")
+    // @ResponseBody
+    // public String test() {
+    //     User user = new User();
+    //     user.setName("Samarth Kalegaonkar");
+    //     user.setEmail("kalegaonkarsamarth@gmailom");
+    //     user.setRole("Engineer");
+    //     Contact contact = new Contact();
+    //     user.getContacts().add(contact);
+    //     userRepository.save(user);
+    //     return "Working";
+    // }
+    @RequestMapping("/home")
+    public String home(){
+        return "home";
     }
 }
