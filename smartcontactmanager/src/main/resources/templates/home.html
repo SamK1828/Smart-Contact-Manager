@@ -1,13 +1,23 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="base::layout(~{::section})">
+  <head>
+
+    <meta charset="UTF-8" />
     <title>Smart Contact Manager</title>
-</head>
-<body>
-    <div class="container">
+  </head>
+  <body>
+    <!-- <div class="container">
         <h1>Welcome to Smart Contact Manager</h1>
         <p>This is a simple application to manage your contacts.</p>
-    </div>
-</body>
+    </div> -->
+
+    <section>
+      <h1>Welcome to Smart Contact Manager</h1>
+      <p>This is a simple application to manage your contacts.</p>
+      <p>To get started, please log in or register a new account.</p>
+      <p>
+        Use the navigation menu to access different features of the application.
+      </p>
+    </section>
+  </body>
 </html>

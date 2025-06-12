@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="base::layout(~{::section})"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Smart Contact Manager</title>
+  </head>
+  <body>
+    <!-- <div class="container">
+        <h1>Welcome to Smart Contact Manager</h1>
+        <p>This is a simple application to manage your contacts.</p>
+    </div> -->
+
+    <section>
+      <h1>About Smart Contact Manager</h1>
+      <p>
+        Smart Contact Manager is a simple application to manage your contacts.
+      </p>
+      <p>It allows you to add, edit, and delete contacts easily.</p>
+      <p>
+        The application is built using Spring Boot and Thymeleaf, providing a
+        modern web interface.
+      </p>
+      <p>
+        To get started, please log in or register a new account using the
+        navigation menu.
+      </p>
+      <p>
+        If you have any questions or feedback, feel free to contact the support
+        team.
+      </p>
+      <p>Thank you for using Smart Contact Manager!</p>
+      <p>
+        <a href="#" th:href="@{/home}">Go back to Home</a>
+        <!-- Link to home page -->
+      </p>
+    </section>
+  </body>
+</html>
