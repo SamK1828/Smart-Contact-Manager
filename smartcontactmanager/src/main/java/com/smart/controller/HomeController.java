@@ -21,7 +21,7 @@ public class HomeController {
     // userRepository.save(user);
     // return "Working";
     // }
-    @RequestMapping("/home")
+    @RequestMapping("/")
     public String home(Model model) {
         model.addAttribute("title", "Home - Smart Contact Manager");
         return "home";
