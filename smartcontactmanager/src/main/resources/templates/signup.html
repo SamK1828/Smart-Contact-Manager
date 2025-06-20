@@ -10,10 +10,10 @@
   </head>
   <body>
     <section>
-      <div class="container my-5">
+      <div class="container my-2">
         <div class="row">
           <div class="col-12 col-md-6 offset-md-3 mx-auto">
-            <div class="my-card mt-3">
+            <div class="my-card mt-3 mb-3">
               <h1 class="text-center">Register Here!</h1>
               <p class="text-center">
                 Please fill in the form below to create a new account.
@@ -64,17 +64,20 @@
                     name="about"
                     id="about-field"
                     class="form-control"
-                    rows="4"
+                    rows="3"
                     placeholder="Tell us about yourself..."
                   ></textarea>
                 </div>
-                <div class="container">
-                  <button type="submit" class="btn bg-primary text-uppercase ">Submit</button>
-                  <button type="reset" class="btn bg-primary text-uppercase">Reset</button>
-                </div>
-
-                <div class="mt-3">
-                  <a href="#" th:href="@{/}">Go back to Home</a>
+                <div class="signup-btn-container">
+                  <button type="submit" class="btn bg-primary text-uppercase">
+                    Submit
+                  </button>
+                  <button type="reset" class="btn bg-primary text-uppercase">
+                    Reset
+                  </button>
+                  <a th:href="@{/}" class="btn bg-primary text-uppercase ms-2"
+                    >Home</a
+                  >
                 </div>
               </form>
             </div>
@@ -82,5 +85,7 @@
         </div>
       </div>
     </section>
+
   </body>
+  
 </html>
