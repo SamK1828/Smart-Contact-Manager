@@ -10,51 +10,69 @@
   </head>
   <body>
     <section>
-        <div class="container my-5">
-            <div class="row">
-            <div class="col-12 col-md-6 offset-md-3 mx-auto">
-                <div class="my-card mt-3">
-                <h1 class="text-center">Login Here!</h1>
-                <p class="text-center">
-                    Please fill in the form below to login to your account.
-                </p>
-                <form action="" th:action="@{/do_login}" method="post">
-                    <!-- Email -->
-                    <div class="mb-3">
-                    <label for="email-field" class="form-label">Email</label>
-                    <input
-                        type="email"
-                        class="form-control"
-                        id="email-field"
-                        required
-                    />
-                    <div class="invalid-feedback">
-                        Please enter a valid email address.
-                    </div>
-                    <div class="valid-feedback">Looks good!</div>
-                    <small id="emailHelp" class="form-text text-muted">
-                        We'll never share your email with anyone else.
-                    </small>
-                    </div>
-                    <!-- Password -->
-                    <div class="mb-3">
-                    <label for="password-field" class="form-label">Password</label>
-                    <input
-                        type="password"
-                        class="form-control"
-                        id="password-field"
-                        required
-                    />
-                    </div>
-                    <!-- Submit Button -->
-                    <button type="submit" class="btn btn-primary w-100">
-                    Login
-                    </button>
-                </form>
+      <div class="container my-5">
+        <div class="row">
+          <div class="col-12 col-md-6 offset-md-3 mx-auto">
+            <div class="my-card mt-3">
+              <h1 class="text-center">Login Here!</h1>
+              <p class="text-center">
+                Please fill in the form below to login to your account.
+              </p>
+              <form action="" th:action="@{/do_login}" method="post">
+                <!-- Email -->
+                <div class="mb-3">
+                  <label for="email-field" class="form-label">Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email-field"
+                    required
+                  />
+                  <div class="invalid-feedback">
+                    Please enter a valid email address.
+                  </div>
+                  <div class="valid-feedback">Looks good!</div>
+                  <small id="emailHelp" class="form-text text-muted">
+                    We'll never share your email with anyone else.
+                  </small>
                 </div>
+                <!-- Password -->
+                <div class="mb-3">
+                  <label for="password-field" class="form-label"
+                    >Password</label
+                  >
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="password-field"
+                    required
+                  />
+                </div>
+                <!-- Submit Button -->
+                <div class="signup-btn-container">
+                  <button type="submit" class="btn bg-primary">Login</button>
+                  <a class="btn bg-primary" th:href="@{/}">Home</a>
+                </div>
+
+                <!-- <a class="btn btn-secondary" th:href="@{/signup}">Sign Up</a>
+                <a class="btn btn-secondary" th:href="@{/forgot-password}"
+                  >Forgot Password</a
+                >
+                <a class="btn btn-secondary" th:href="@{/contact}"
+                  >Contact Us</a
+                >
+                <a class="btn btn-secondary" th:href="@{/about}">About Us</a>
+                <a class="btn btn-secondary" th:href="@{/}">Home</a> -->
+                <div class="text-center">
+                  <p class="text-muted mb-0">
+                    Don't have an account? <a th:href="@{/signup}">Sign Up</a>
+                  </p>
+                </div>
+              </form>
             </div>
-            </div>
+          </div>
         </div>
+      </div>
     </section>
   </body>
 </html>
