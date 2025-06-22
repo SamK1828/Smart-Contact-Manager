@@ -114,3 +114,53 @@ a[th\:href]:hover {
     /* margin-top: 20px; */
     /* margin-bottom: 20px; */
 }
+
+/* Container styling (optional, centers it better) */
+.custom-checkbox-container {
+  margin-top: 12px;
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  /* font-size: 0.9rem; */
+  color: #555;
+}
+
+/* Remove default checkbox */
+.custom-checkbox {
+  appearance: none; 
+ -webkit-appearance: none; 
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgb(247, 155, 42); /* golden border */
+  border-radius: 4px;
+  background-color: #fff;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Checkmark (when checked) */
+.custom-checkbox:checked {
+  background-color: rgb(247, 155, 42);
+  border-color: #0000008c;
+}
+
+.custom-checkbox:checked::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 6px;
+  width: 4px;
+  height: 9px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* Label hover effect */
+.custom-checkbox-container label:hover {
+  color: rgb(153, 123, 22);
+  transition: color 0.2s;
+}

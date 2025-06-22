@@ -2,7 +2,7 @@
 <html
   lang="en"
   xmlns:th="http://www.thymeleaf.org"
-  th:replace="base::layout(~{::section})"
+  th:replace="~{base::layout(~{::section})}"
 >
   <head>
     <meta charset="UTF-8" />
@@ -18,25 +18,34 @@
               <p class="text-center">
                 Please fill in the form below to create a new account.
               </p>
-              <form action="" th:action="@{/do_register}" method="post">
+              <form
+                action=""
+                th:action="@{/do_register}"
+                method="post"
+                th:object="${user}"
+              >
                 <!-- Your Name -->
                 <div class="mb-3">
                   <label for="name-field" class="form-label">Your Name</label>
                   <input
+                    name="name"
                     type="text"
                     class="form-control"
                     id="name-field"
                     required
+                    th:value="${user.name}"
                   />
                 </div>
                 <!-- Email -->
                 <div class="mb-3">
                   <label for="email-field" class="form-label">Email</label>
                   <input
+                    name="email"
                     type="email"
                     class="form-control"
                     id="email-field"
                     required
+                    th:value="${user.email}"
                   />
                   <div class="invalid-feedback">
                     Please enter a valid email address.
@@ -52,6 +61,7 @@
                     >Password</label
                   >
                   <input
+                    name="password"
                     type="password"
                     class="form-control"
                     id="password-field"
@@ -65,9 +75,25 @@
                     id="about-field"
                     class="form-control"
                     rows="3"
+                    th:value="${user.about}"
                     placeholder="Tell us about yourself..."
                   ></textarea>
                 </div>
+                <!-- Terms and Condition CheckBox -->
+                <div class="form-group text-center custom-checkbox-container ">
+                  <input
+                    name="agreement"
+                    type="checkbox"
+                    class="form-check-input custom-checkbox"
+                    id="agreement-checkbox"
+                    required
+                  />
+                  <label class="form-check-label" for="agreement-checkbox">
+                    I accept the terms and conditions.
+                  </label>
+                </div>
+
+                <!-- Submit Button -->
                 <div class="signup-btn-container">
                   <button type="submit" class="btn bg-primary text-uppercase">
                     Submit
@@ -85,7 +111,5 @@
         </div>
       </div>
     </section>
-
   </body>
-  
 </html>
