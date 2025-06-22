@@ -56,8 +56,10 @@ public class HomeController {
     // Handler for Registering User
     public String registerUser(@ModelAttribute("user") User user,
             @RequestParam(value = "agreement", defaultValue = "false") boolean agreement) {
-                System.out.println("Agreement"+ agreement);
-                System.out.println("User"+ user);
+                user.setEnabled(true);
+                user.setRole("ROLE_USER");
+                System.out.println("Agreement "+ agreement);
+                System.out.println("User "+ user);
         return "signup";
     }
 }
