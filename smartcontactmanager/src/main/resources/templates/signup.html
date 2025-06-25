@@ -13,9 +13,12 @@
       <div class="container my-2">
         <div class="row">
           <div class="col-12 col-md-6 offset-md-3 mx-auto">
-            <div class="my-card mt-3 mb-3">
+            <div class="my-card mb-2">
+              <div class="alert alert-primary" role="alert">
+                This is a primary alert—check it out!
+              </div>
               <h1 class="text-center">Register Here!</h1>
-              <p class="text-center">
+              <p class="text-center mb-0">
                 Please fill in the form below to create a new account.
               </p>
               <form
@@ -25,7 +28,7 @@
                 th:object="${user}"
               >
                 <!-- Your Name -->
-                <div class="mb-3">
+                <div class="mb-2">
                   <label for="name-field" class="form-label">Your Name</label>
                   <input
                     name="name"
@@ -37,7 +40,7 @@
                   />
                 </div>
                 <!-- Email -->
-                <div class="mb-3">
+                <div class="mb-2">
                   <label for="email-field" class="form-label">Email</label>
                   <input
                     name="email"
@@ -47,16 +50,16 @@
                     required
                     th:value="${user.email}"
                   />
-                  <div class="invalid-feedback">
+                  <div class="invalid-feedback mb-2">
                     Please enter a valid email address.
                   </div>
-                  <div class="valid-feedback">Looks good!</div>
+                  <div class="valid-feedback mb-2">Looks good!</div>
                   <small id="emailHelp" class="form-text text-muted">
                     We'll never share your email with anyone else.
                   </small>
                 </div>
                 <!-- Password -->
-                <div class="mb-3">
+                <div class="mb-2">
                   <label for="password-field" class="form-label"
                     >Password</label
                   >
@@ -69,7 +72,7 @@
                   />
                 </div>
                 <!-- About Field -->
-                <div class="form-group">
+                <div class="form-group mb-2">
                   <textarea
                     name="about"
                     id="about-field"
@@ -80,7 +83,7 @@
                   ></textarea>
                 </div>
                 <!-- Terms and Condition CheckBox -->
-                <div class="form-group text-center custom-checkbox-container ">
+                <div class="form-group text-center custom-checkbox-container">
                   <input
                     name="agreement"
                     type="checkbox"
