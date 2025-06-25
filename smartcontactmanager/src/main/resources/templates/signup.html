@@ -13,9 +13,12 @@
       <div class="container my-2">
         <div class="row">
           <div class="col-12 col-md-6 offset-md-3 mx-auto">
-            <div class="my-card mb-2">
-              <div class="alert alert-primary" role="alert">
-                This is a primary alert—check it out!
+            <div class="my-card mt-2 mb-2">
+              <div th:if="${session.message}" th:classappend="${session.message.type}" class="alert" role="alert">
+                <!-- <span th:text="${message.content}"></span> -->
+                 <!-- Hello -->
+                  <p th:text="${session.message.content}"></p>
+
               </div>
               <h1 class="text-center">Register Here!</h1>
               <p class="text-center mb-0">
@@ -87,9 +90,8 @@
                   <input
                     name="agreement"
                     type="checkbox"
-                    class="form-check-input custom-checkbox"
+                    class="custom-checkbox"
                     id="agreement-checkbox"
-                    required
                   />
                   <label class="form-check-label" for="agreement-checkbox">
                     I accept the terms and conditions.
