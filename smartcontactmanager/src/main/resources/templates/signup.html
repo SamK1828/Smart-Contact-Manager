@@ -14,11 +14,15 @@
         <div class="row">
           <div class="col-12 col-md-6 offset-md-3 mx-auto">
             <div class="my-card mt-2 mb-2">
-              <div th:if="${session.message}" th:classappend="${session.message.type}" class="alert" role="alert">
-                <!-- <span th:text="${message.content}"></span> -->
-                 <!-- Hello -->
-                  <p th:text="${session.message.content}"></p>
-
+              <div
+                th:if="${session.message}"
+                th:classappend="${session.message.type}"
+                class="alert"
+                role="alert"
+              >
+                <span th:text="${session.message.content}"></span>
+                <!-- Hello -->
+                <!-- <p th:text="${session.message.content}"></p> -->
               </div>
               <h1 class="text-center">Register Here!</h1>
               <p class="text-center mb-0">
@@ -38,6 +42,7 @@
                     type="text"
                     class="form-control"
                     id="name-field"
+                    aria-describedby="nameHelp"
                     required
                     th:value="${user.name}"
                   />
@@ -91,9 +96,9 @@
                     name="agreement"
                     type="checkbox"
                     class="custom-checkbox"
-                    id="agreement-checkbox"
+                    id="agreement"
                   />
-                  <label class="form-check-label" for="agreement-checkbox">
+                  <label class="form-check-label" for="agreement">
                     I accept the terms and conditions.
                   </label>
                 </div>
@@ -103,7 +108,10 @@
                   <button type="submit" class="btn bg-primary text-uppercase">
                     Submit
                   </button>
-                  <button type="reset" class="btn bg-primary text-uppercase">
+                  <button
+                    type="reset"
+                    class="btn bg-primary text-uppercase ms-2"
+                  >
                     Reset
                   </button>
                   <a th:href="@{/}" class="btn bg-primary text-uppercase ms-2"

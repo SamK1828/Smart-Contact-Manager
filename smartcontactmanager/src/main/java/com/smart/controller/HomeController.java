@@ -3,7 +3,7 @@ package com.smart.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+// import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -65,7 +65,11 @@ public class HomeController {
             Model model, HttpSession session) {
         try {
             if (!agreement) {
-                throw new Exception("You did Not agreed the T&C.");
+                // throw new Exception("You did Not agreed the T&C.");
+                model.addAttribute("user", user);
+                session.setAttribute("You did Not agreed the T&C.", "alert-danger");
+                return "signup";
+
             }
             user.setEnabled(true);
             user.setRole("ROLE_USER");
@@ -75,14 +79,14 @@ public class HomeController {
 
             User result = this.userRepository.save(user);
             System.out.println(result);
-            model.addAttribute("user", new User());
+            model.addAttribute("user", result);
 
             session.setAttribute("Successfully Registered", "alert-success");
             return "signup";
         } catch (Exception e) {
             e.printStackTrace();
             model.addAttribute("user", user);
-            session.setAttribute("message", new Message(e.getMessage(), "alert-danger"));
+            session.setAttribute("message", new Message("Something Went Wrong:\n" + e.getMessage(), "alert-danger"));
             return "signup";
         }
 
@@ -138,19 +142,19 @@ public class HomeController {
     // }
     // }
 
-    @GetMapping("/signup")
-    public String signup(Model model, HttpSession session) {
-    model.addAttribute("title", "Register - Smart Contact Manager");
-    model.addAttribute("user", new User());
+    // @GetMapping("/signup")
+    // public String signup(Model model, HttpSession session) {
+    // model.addAttribute("title", "Register - Smart Contact Manager");
+    // model.addAttribute("user", new User());
 
-    // ✅ Transfer session message to model and clear it
-    Object message = session.getAttribute("message");
-    if (message != null) {
-    model.addAttribute("message", message);
-    session.removeAttribute("message");
-    }
+    // // ✅ Transfer session message to model and clear it
+    // Object message = session.getAttribute("message");
+    // if (message != null) {
+    // model.addAttribute("message", message);
+    // session.removeAttribute("message");
+    // }
 
-    return "signup";
-    }
+    // return "signup";
+    // }
 
 }
