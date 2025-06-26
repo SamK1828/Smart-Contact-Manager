@@ -3,7 +3,7 @@ package com.smart.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-// import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -67,8 +67,8 @@ public class HomeController {
             if (!agreement) {
                 // throw new Exception("You did Not agreed the T&C.");
                 model.addAttribute("user", user);
-                session.setAttribute("You did Not agreed the T&C.", "alert-danger");
-                return "signup";
+                session.setAttribute("message",
+                        new Message("You did not agree to the Terms & Conditions.", "alert-danger"));
 
             }
             user.setEnabled(true);
@@ -81,7 +81,7 @@ public class HomeController {
             System.out.println(result);
             model.addAttribute("user", result);
 
-            session.setAttribute("Successfully Registered", "alert-success");
+            session.setAttribute("message",new Message("Successfully Registered..", "alert-success"));
             return "signup";
         } catch (Exception e) {
             e.printStackTrace();
@@ -142,19 +142,19 @@ public class HomeController {
     // }
     // }
 
-    // @GetMapping("/signup")
-    // public String signup(Model model, HttpSession session) {
-    // model.addAttribute("title", "Register - Smart Contact Manager");
-    // model.addAttribute("user", new User());
+    @GetMapping("/signup")
+    public String signup(Model model, HttpSession session) {
+    model.addAttribute("title", "Register - Smart Contact Manager");
+    model.addAttribute("user", new User());
 
-    // // ✅ Transfer session message to model and clear it
-    // Object message = session.getAttribute("message");
-    // if (message != null) {
-    // model.addAttribute("message", message);
-    // session.removeAttribute("message");
-    // }
+    // ✅ Transfer session message to model and clear it
+    Object message = session.getAttribute("message");
+    if (message != null) {
+    model.addAttribute("message", message);
+    session.removeAttribute("message");
+    }
 
-    // return "signup";
-    // }
+    return "signup";
+    }
 
 }

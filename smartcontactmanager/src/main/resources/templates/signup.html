@@ -20,7 +20,7 @@
                 class="alert"
                 role="alert"
               >
-                <span th:text="${session.message.content}"></span>
+                <span class="text-center" th:text="${session.message.content}"></span>
                 <!-- Hello -->
                 <!-- <p th:text="${session.message.content}"></p> -->
               </div>
@@ -86,7 +86,7 @@
                     id="about-field"
                     class="form-control"
                     rows="3"
-                    th:value="${user.about}"
+                    th:text="${user.about}"
                     placeholder="Tell us about yourself..."
                   ></textarea>
                 </div>
