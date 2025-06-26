@@ -3,6 +3,7 @@ package com.smart.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,7 @@ import com.smart.helper.Message;
 import com.smart.models.User;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 @Controller
 public class HomeController {
@@ -60,7 +62,7 @@ public class HomeController {
     @PostMapping("/do_register")
     // @RequestMapping(value="/do_register",method=RequestMethod.POST)
     // Handler for Registering User
-    public String registerUser(@ModelAttribute("user") User user,
+    public String registerUser(@Valid @ModelAttribute("user") User user,BindingResult bindResult,
             @RequestParam(value = "agreement", defaultValue = "false") boolean agreement,
             Model model, HttpSession session) {
         try {
@@ -71,6 +73,12 @@ public class HomeController {
                         new Message("You did not agree to the Terms & Conditions.", "alert-danger"));
 
             }
+            if(bindResult.hasErrors()){
+                System.out.println("ERROR"+bindResult.toString());
+                model.addAttribute("user", user);
+                return "signup";
+            }
+
             user.setEnabled(true);
             user.setRole("ROLE_USER");
             user.setImageUrl("default.png");

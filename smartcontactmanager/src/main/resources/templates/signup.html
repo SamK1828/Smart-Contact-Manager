@@ -32,6 +32,7 @@
                 Please fill in the form below to create a new account.
               </p>
               <form
+                novalidate
                 action=""
                 th:action="@{/do_register}"
                 method="post"
@@ -44,11 +45,15 @@
                     name="name"
                     type="text"
                     class="form-control"
+                    th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' : ''"
                     id="name-field"
                     aria-describedby="nameHelp"
                     required
                     th:value="${user.name}"
                   />
+                  <div class="invalid-feedback" th:each="e: ${#fields.errors('name')}">
+                    <span th:text="${e}"></span>
+                  </div>
                 </div>
                 <!-- Email -->
                 <div class="mb-2">
