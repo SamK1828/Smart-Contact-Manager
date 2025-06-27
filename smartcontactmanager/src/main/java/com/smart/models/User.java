@@ -22,15 +22,22 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @NotBlank(message="Name Field is Required...")
-    @Size(min=2,max=20,message="Length Should Between 2 and 20")
+    @Size(min=2,max=30,message="Length Should Between 2 and 30")
     private String name;
     @Column(unique = true)
+    @NotBlank(message="Email Field is Required...")
+    @Size(min=5,max=50,message="Length Should Between 5 and 50")
+    @jakarta.validation.constraints.Email(message = "Invalid Email Format")
     private String email;
+    @NotBlank(message="Password Field is Required...")
+    @Size(min=5,max=20,message="Length Should Between 5 and 20")
     private String password;
     private String role;
     private boolean enabled;
     private String imageUrl;
     @Column(length = 500)
+    @Size(max=500,message="About Length Should be Less than 500 Characters")
+    @NotBlank(message="About Field is Required...")
     private String about;
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "user")

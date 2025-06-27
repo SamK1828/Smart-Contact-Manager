@@ -51,7 +51,10 @@
                     required
                     th:value="${user.name}"
                   />
-                  <div class="invalid-feedback" th:each="e: ${#fields.errors('name')}">
+                  <div
+                    class="invalid-feedback"
+                    th:each="e: ${#fields.errors('name')}"
+                  >
                     <span th:text="${e}"></span>
                   </div>
                 </div>
@@ -62,14 +65,17 @@
                     name="email"
                     type="email"
                     class="form-control"
+                    th:classappend="${#fields.hasErrors('email')} ? 'is-invalid' : ''"
                     id="email-field"
                     required
                     th:value="${user.email}"
                   />
-                  <div class="invalid-feedback mb-2">
-                    Please enter a valid email address.
+                  <div
+                    class="invalid-feedback"
+                    th:each="e: ${#fields.errors('email')}"
+                  >
+                    <span th:text="${e}"></span>
                   </div>
-                  <div class="valid-feedback mb-2">Looks good!</div>
                   <small id="emailHelp" class="form-text text-muted">
                     We'll never share your email with anyone else.
                   </small>
@@ -83,9 +89,16 @@
                     name="password"
                     type="password"
                     class="form-control"
+                    th:classappend="${#fields.hasErrors('password')} ? 'is-invalid' : ''"
                     id="password-field"
                     required
                   />
+                                    <div
+                    class="invalid-feedback"
+                    th:each="e: ${#fields.errors('password')}"
+                  >
+                    <span th:text="${e}"></span>
+                  </div>
                 </div>
                 <!-- About Field -->
                 <div class="form-group mb-2">
@@ -93,10 +106,17 @@
                     name="about"
                     id="about-field"
                     class="form-control"
+                    th:classappend="${#fields.hasErrors('about')} ? 'is-invalid' : ''"
                     rows="3"
                     th:text="${user.about}"
                     placeholder="Tell us about yourself..."
                   ></textarea>
+                                    <div
+                    class="invalid-feedback"
+                    th:each="e: ${#fields.errors('about')}"
+                  >
+                    <span th:text="${e}"></span>
+                  </div>
                 </div>
                 <!-- Terms and Condition CheckBox -->
                 <div class="form-group text-center custom-checkbox-container">

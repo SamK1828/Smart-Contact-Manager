@@ -62,21 +62,21 @@ public class HomeController {
     @PostMapping("/do_register")
     // @RequestMapping(value="/do_register",method=RequestMethod.POST)
     // Handler for Registering User
-    public String registerUser(@Valid @ModelAttribute("user") User user,BindingResult bindResult,
+    public String registerUser(@Valid @ModelAttribute("user") User user, BindingResult bindResult,
             @RequestParam(value = "agreement", defaultValue = "false") boolean agreement,
             Model model, HttpSession session) {
         try {
+            if (bindResult.hasErrors()) {
+                System.out.println("ERROR" + bindResult.toString());
+                model.addAttribute("user", user);
+                return "signup";
+            }
             if (!agreement) {
                 // throw new Exception("You did Not agreed the T&C.");
                 model.addAttribute("user", user);
                 session.setAttribute("message",
                         new Message("You did not agree to the Terms & Conditions.", "alert-danger"));
 
-            }
-            if(bindResult.hasErrors()){
-                System.out.println("ERROR"+bindResult.toString());
-                model.addAttribute("user", user);
-                return "signup";
             }
 
             user.setEnabled(true);
@@ -89,7 +89,7 @@ public class HomeController {
             System.out.println(result);
             model.addAttribute("user", result);
 
-            session.setAttribute("message",new Message("Successfully Registered..", "alert-success"));
+            session.setAttribute("message", new Message("Successfully Registered..", "alert-success"));
             return "signup";
         } catch (Exception e) {
             e.printStackTrace();
@@ -152,17 +152,17 @@ public class HomeController {
 
     @GetMapping("/signup")
     public String signup(Model model, HttpSession session) {
-    model.addAttribute("title", "Register - Smart Contact Manager");
-    model.addAttribute("user", new User());
+        model.addAttribute("title", "Register - Smart Contact Manager");
+        model.addAttribute("user", new User());
 
-    // ✅ Transfer session message to model and clear it
-    Object message = session.getAttribute("message");
-    if (message != null) {
-    model.addAttribute("message", message);
-    session.removeAttribute("message");
-    }
+        // ✅ Transfer session message to model and clear it
+        Object message = session.getAttribute("message");
+        if (message != null) {
+            model.addAttribute("message", message);
+            session.removeAttribute("message");
+        }
 
-    return "signup";
+        return "signup";
     }
 
 }
