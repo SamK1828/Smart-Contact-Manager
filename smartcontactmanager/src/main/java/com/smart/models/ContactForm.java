@@ -21,6 +21,9 @@ public class ContactForm {
     @Size(max = 1000, message = "Description must be at most 1000 characters.")
     private String description;
 
+    @Size(max = 300, message = "Tags must be at most 300 characters.")
+    private String tags;
+
     public String getContactName() {
         return contactName;
     }
@@ -59,5 +62,13 @@ public class ContactForm {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
     }
 }

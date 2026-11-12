@@ -5,6 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.not;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -203,6 +206,61 @@ class SmartcontactmanagerApplicationTests {
                 () -> contactService.findContact(principal("other@example.com"), contact.getcId()));
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
         assertEquals(1, contactRepository.findAllByUser_IdOrderByContactNameAsc(owner.getId()).size());
+    }
+
+    @Test
+    void contactsCanBeTaggedSearchedFilteredAndFavorited() throws Exception {
+        com.smart.models.User savedUser = userRepository.saveAndFlush(createUser("organize@example.com"));
+        MockHttpSession session = signIn("organize@example.com", "correct-horse-10");
+
+        mockMvc.perform(post("/user/contacts")
+                        .session(session)
+                        .with(csrf())
+                        .param("contactName", "Jordan")
+                        .param("secondName", "Lee")
+                        .param("phone", "+1 555 0100")
+                        .param("work", "Design Studio")
+                        .param("description", "Met at a conference")
+                        .param("tags", "Work, Client, work"))
+                .andExpect(status().is3xxRedirection());
+
+        Contact contact = contactRepository.findAllByUser_IdOrderByContactNameAsc(savedUser.getId()).get(0);
+        assertEquals("work,client", contact.getTags());
+        assertFalse(contact.isFavorite());
+
+        mockMvc.perform(get("/user/dashboard")
+                        .session(session)
+                        .param("q", "STUDIO")
+                        .param("tag", "CLIENT")
+                        .param("sort", "recent"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("Jordan Lee")))
+                .andExpect(content().string(containsString("work · client")));
+
+        mockMvc.perform(post("/user/contacts/{contactId}/favorite", contact.getcId())
+                        .session(session)
+                        .with(csrf())
+                        .param("q", "studio")
+                        .param("tag", "client")
+                        .param("favorites", "true")
+                        .param("sort", "recent"))
+                .andExpect(status().is3xxRedirection());
+
+        assertTrue(contactRepository.findById(contact.getcId()).orElseThrow().isFavorite());
+        mockMvc.perform(get("/user/dashboard")
+                        .session(session)
+                        .param("q", "studio")
+                        .param("tag", "client")
+                        .param("favorites", "true"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("Jordan Lee")));
+
+        mockMvc.perform(get("/user/dashboard")
+                        .session(session)
+                        .param("q", "unmatched"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("No matching contacts")))
+                .andExpect(content().string(not(containsString("Jordan Lee"))));
     }
 
     private com.smart.models.User createUser(String email) {

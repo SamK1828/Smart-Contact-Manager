@@ -35,6 +35,14 @@
                 <div class="invalid-feedback" th:errors="*{work}"></div>
               </div>
               <div class="col-12">
+                <label class="form-label" for="tags">Tags</label>
+                <input class="form-control" id="tags" th:field="*{tags}"
+                  th:classappend="${#fields.hasErrors('tags')} ? 'is-invalid' : ''"
+                  placeholder="Work, family, clients" aria-describedby="tagsHelp" />
+                <div class="form-text" id="tagsHelp">Separate tags with commas.</div>
+                <div class="invalid-feedback" th:errors="*{tags}"></div>
+              </div>
+              <div class="col-12">
                 <label class="form-label" for="description">Notes</label>
                 <textarea class="form-control" id="description" rows="4" th:field="*{description}"
                   th:classappend="${#fields.hasErrors('description')} ? 'is-invalid' : ''"

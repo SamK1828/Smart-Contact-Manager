@@ -17,12 +17,51 @@
         <div class="alert alert-success mt-4" role="status" th:if="${param.created}">Contact added.</div>
         <div class="alert alert-success mt-4" role="status" th:if="${param.updated}">Contact updated.</div>
         <div class="alert alert-success mt-4" role="status" th:if="${param.deleted}">Contact deleted.</div>
+        <div class="alert alert-success mt-4" role="status" th:if="${param.favoriteUpdated}">Favorite updated.</div>
 
-        <div class="empty-state surface-card mt-4" th:if="${#lists.isEmpty(contacts)}">
+        <form class="contact-filters surface-card mt-4" th:action="@{/user/dashboard}" method="get">
+          <div class="row g-3 align-items-end">
+            <div class="col-12 col-lg-5">
+              <label class="form-label" for="contactSearch">Search contacts</label>
+              <input class="form-control" id="contactSearch" type="search" name="q" th:value="${query}"
+                placeholder="Name, phone, workplace, notes, or tag" />
+            </div>
+            <div class="col-12 col-sm-6 col-lg-3">
+              <label class="form-label" for="tagFilter">Filter by tag</label>
+              <input class="form-control" id="tagFilter" type="search" name="tag" th:value="${tag}"
+                placeholder="e.g. work" />
+            </div>
+            <div class="col-12 col-sm-6 col-lg-2">
+              <label class="form-label" for="contactSort">Sort by</label>
+              <select class="form-select" id="contactSort" name="sort">
+                <option value="name" th:selected="${sort == 'name'}">Name</option>
+                <option value="recent" th:selected="${sort == 'recent'}">Recently added</option>
+              </select>
+            </div>
+            <div class="col-12 col-lg-2">
+              <button class="btn btn-primary w-100" type="submit">Apply filters</button>
+            </div>
+            <div class="col-12">
+              <div class="form-check">
+                <input class="form-check-input" id="favoritesOnly" type="checkbox" name="favorites"
+                  value="true" th:checked="${favorites}" />
+                <label class="form-check-label" for="favoritesOnly">Show favorites only</label>
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <div class="empty-state surface-card mt-4" th:if="${#lists.isEmpty(contacts) and !isFiltered}">
           <div class="empty-icon" aria-hidden="true">＋</div>
           <h2 class="h4">Your list starts here</h2>
           <p class="text-secondary">Add your first contact and keep their details close at hand.</p>
           <a class="btn btn-primary" th:href="@{/user/contacts/new}">Add your first contact</a>
+        </div>
+
+        <div class="empty-state surface-card mt-4" th:if="${#lists.isEmpty(contacts) and isFiltered}">
+          <h2 class="h4">No matching contacts</h2>
+          <p class="text-secondary">Try another search or clear the current filters.</p>
+          <a class="btn btn-outline-secondary" th:href="@{/user/dashboard}">Clear filters</a>
         </div>
 
         <div class="row g-3 mt-2" th:unless="${#lists.isEmpty(contacts)}">
@@ -35,6 +74,16 @@
                   <h2 class="h5 mb-1 text-truncate" th:text="${contact.contactName + (contact.secondName == null || contact.secondName.isBlank() ? '' : ' ' + contact.secondName)}">Contact name</h2>
                   <p class="small text-secondary mb-0" th:text="${contact.work} ?: 'Personal contact'">Workplace</p>
                 </div>
+                <form th:action="@{/user/contacts/{id}/favorite(id=${contact.cId})}" method="post" class="m-0">
+                  <input type="hidden" name="q" th:value="${query}" />
+                  <input type="hidden" name="tag" th:value="${tag}" />
+                  <input type="hidden" name="favorites" th:value="${favorites}" />
+                  <input type="hidden" name="sort" th:value="${sort}" />
+                  <button class="favorite-toggle" type="submit" th:attr="aria-label=${contact.favorite ? 'Remove from favorites' : 'Add to favorites'}"
+                    th:title="${contact.favorite ? 'Remove from favorites' : 'Add to favorites'}">
+                    <span aria-hidden="true" th:text="${contact.favorite ? '★' : '☆'}">☆</span>
+                  </button>
+                </form>
                 <div class="dropdown">
                   <button class="btn btn-icon" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Contact actions">•••</button>
                   <ul class="dropdown-menu dropdown-menu-end">
@@ -49,6 +98,9 @@
               </div>
               <div class="contact-details mt-4">
                 <a class="contact-phone" th:href="|tel:${contact.phone}|" th:text="${contact.phone}">Phone number</a>
+                <p class="contact-tags small mt-2 mb-0" th:if="${contact.tags}">
+                  <span class="text-secondary">Tags:</span> <span th:text="${#strings.replace(contact.tags, ',', ' · ')}">work · family</span>
+                </p>
                 <p class="small text-secondary mt-2 mb-0" th:if="${contact.description}" th:text="${contact.description}">Description</p>
               </div>
             </article>

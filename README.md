@@ -7,11 +7,14 @@ A Spring Boot web application for keeping a private, account-scoped contact list
 - Account registration with validation and BCrypt password hashing
 - Email/password sign-in and sign-out
 - Create, view, update, and delete personal contacts
+- Search contacts by name, phone, workplace, notes, or tags; filter favorites and tags
+- Mark favorites and sort contacts by name or recency
+- Organize contacts with comma-separated tags
 - Profile details and password settings
 - Responsive Thymeleaf interface
 - CSRF protection and per-account contact ownership checks
 
-Image uploads, search and pagination, and administrative tools are not included in this MVP.
+Image uploads, pagination, and administrative tools are not included in this MVP.
 
 ## Requirements
 

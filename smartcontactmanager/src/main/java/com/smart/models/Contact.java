@@ -31,6 +31,11 @@ public class Contact {
     @Column(length = 1000)
     @Size(max = 1000, message = "Description must be at most 1000 characters.")
     private String description;
+    @Column(length = 300)
+    @Size(max = 300, message = "Tags must be at most 300 characters.")
+    private String tags;
+    @Column(nullable = false)
+    private boolean favorite;
 
     @ManyToOne(fetch = jakarta.persistence.FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
@@ -82,6 +87,22 @@ public class Contact {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
     }
 
     public User getUser() {
