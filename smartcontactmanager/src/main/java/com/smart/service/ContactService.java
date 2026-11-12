@@ -100,7 +100,7 @@ public class ContactService {
             return "";
         }
         return Stream.of(tags.split(","))
-                .map(String::trim)
+                .map(tag -> tag.trim())
                 .filter(tag -> !tag.isEmpty())
                 .map(tag -> tag.toLowerCase(Locale.ROOT))
                 .distinct()
