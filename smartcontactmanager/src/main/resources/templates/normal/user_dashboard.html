@@ -1,14 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Dashboard</title>
-</head>
-<body>
-    <h1>Welcome to your Dashboard</h1>
-    <p>Here you can manage your contacts and settings.</p>
-    <a href="/user/profile">Go to Profile</a>
-    <a href="/user/settings">Go to Settings</a>
-</body>
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base :: layout(~{::section})}">
+  <body>
+    <section class="page-section">
+      <div class="container">
+        <div class="page-heading d-flex flex-column flex-md-row justify-content-between align-items-md-end gap-3">
+          <div>
+            <span class="eyebrow">Your private address book</span>
+            <h1 class="page-title mb-1">My contacts</h1>
+            <p class="text-secondary mb-0">A thoughtful place for all the details you want to remember.</p>
+          </div>
+          <a class="btn btn-primary" th:href="@{/user/contacts/new}">
+            <span aria-hidden="true">+</span> Add a contact
+          </a>
+        </div>
+
+        <div class="alert alert-success mt-4" role="status" th:if="${param.created}">Contact added.</div>
+        <div class="alert alert-success mt-4" role="status" th:if="${param.updated}">Contact updated.</div>
+        <div class="alert alert-success mt-4" role="status" th:if="${param.deleted}">Contact deleted.</div>
+
+        <div class="empty-state surface-card mt-4" th:if="${#lists.isEmpty(contacts)}">
+          <div class="empty-icon" aria-hidden="true">＋</div>
+          <h2 class="h4">Your list starts here</h2>
+          <p class="text-secondary">Add your first contact and keep their details close at hand.</p>
+          <a class="btn btn-primary" th:href="@{/user/contacts/new}">Add your first contact</a>
+        </div>
+
+        <div class="row g-3 mt-2" th:unless="${#lists.isEmpty(contacts)}">
+          <div class="col-12 col-md-6 col-xl-4" th:each="contact : ${contacts}">
+            <article class="contact-card surface-card h-100">
+              <div class="d-flex align-items-start justify-content-between gap-3">
+                <div class="contact-avatar" aria-hidden="true"
+                  th:text="${#strings.substring(contact.contactName, 0, 1).toUpperCase()}">A</div>
+                <div class="flex-grow-1 min-w-0">
+                  <h2 class="h5 mb-1 text-truncate" th:text="${contact.contactName + (contact.secondName == null || contact.secondName.isBlank() ? '' : ' ' + contact.secondName)}">Contact name</h2>
+                  <p class="small text-secondary mb-0" th:text="${contact.work} ?: 'Personal contact'">Workplace</p>
+                </div>
+                <div class="dropdown">
+                  <button class="btn btn-icon" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Contact actions">•••</button>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" th:href="@{/user/contacts/{id}/edit(id=${contact.cId})}">Edit contact</a></li>
+                    <li>
+                      <form th:action="@{/user/contacts/{id}/delete(id=${contact.cId})}" method="post">
+                        <button class="dropdown-item text-danger" type="submit">Delete contact</button>
+                      </form>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="contact-details mt-4">
+                <a class="contact-phone" th:href="|tel:${contact.phone}|" th:text="${contact.phone}">Phone number</a>
+                <p class="small text-secondary mt-2 mb-0" th:if="${contact.description}" th:text="${contact.description}">Description</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
 </html>

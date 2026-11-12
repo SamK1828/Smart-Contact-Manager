@@ -1,29 +1,37 @@
-<!DOCTYPE html>
-<html
-  lang="en"
-  xmlns:th="http://www.thymeleaf.org"
-  th:replace="~{base::layout(~{::section})}"
->
-  <head>
-    <meta charset="UTF-8" />
-    <title>Smart Contact Manager</title>
-  </head>
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base :: layout(~{::section})}">
   <body>
-    <!-- <div class="container">
-        <h1>Welcome to Smart Contact Manager</h1>
-        <p>This is a simple application to manage your contacts.</p>
-    </div> -->
-
-    <section class="banner d-flex justify-content-center ">
-      <div class="text-center">
-        <h1 class="font-bold-weight" style="font-weight: bold;">Welcome to Smart Contact Manager</h1>
-        <p>This is a simple application to manage your contacts.</p>
-        <p>To get started, please log in or register a new account.</p>
-        <p>
-          Use the navigation menu to access different features of the
-          application.
-        </p>
-        <button class="btn bg-btn btn-lg">Get Started</button>
+    <section>
+      <div class="hero-section">
+        <div class="container hero-content">
+          <span class="eyebrow">A calmer way to stay connected</span>
+          <h1>Your people,<br /><span>all in one place.</span></h1>
+          <p class="hero-copy">
+            Save the details that matter and find the right person whenever you need them.
+          </p>
+          <div class="d-flex flex-wrap gap-3">
+            <a class="btn btn-primary btn-lg" th:href="@{/signup}">Get started <span aria-hidden="true">→</span></a>
+            <a class="btn btn-ghost btn-lg" th:href="@{/about}">Explore the app</a>
+          </div>
+          <div class="hero-note"><span class="status-dot"></span> Private by design. Your contacts belong to you.</div>
+        </div>
+      </div>
+      <div class="container feature-strip">
+        <article class="feature-item">
+          <span class="feature-number">01</span>
+          <h2>One tidy list</h2>
+          <p>Keep names, numbers, and notes together instead of scattered across apps.</p>
+        </article>
+        <article class="feature-item">
+          <span class="feature-number">02</span>
+          <h2>Made for you</h2>
+          <p>Your private account keeps your contact book separate from everyone else's.</p>
+        </article>
+        <article class="feature-item">
+          <span class="feature-number">03</span>
+          <h2>Easy to update</h2>
+          <p>Add a new connection or update a detail in just a few clicks.</p>
+        </article>
       </div>
     </section>
   </body>

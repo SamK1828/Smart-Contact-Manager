@@ -3,15 +3,15 @@ package com.smart.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -21,23 +21,23 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @NotBlank(message="Name Field is Required...")
-    @Size(min=2,max=30,message="Length Should Between 2 and 30")
+    @NotBlank(message = "Please enter your name.")
+    @Size(min = 2, max = 60, message = "Name must be between 2 and 60 characters.")
     private String name;
     @Column(unique = true)
-    @NotBlank(message="Email Field is Required...")
-    @Size(min=5,max=50,message="Length Should Between 5 and 50")
-    @jakarta.validation.constraints.Email(message = "Invalid Email Format")
+    @NotBlank(message = "Please enter your email.")
+    @Size(max = 254, message = "Email must be at most 254 characters.")
+    @jakarta.validation.constraints.Email(message = "Enter a valid email address.")
     private String email;
-    @NotBlank(message="Password Field is Required...")
-    @Size(min=5,max=20,message="Length Should Between 5 and 20")
+    @NotBlank(message = "Please enter a password.")
+    @Size(min = 10, max = 72, message = "Password must be between 10 and 72 characters.")
     private String password;
     private String role;
     private boolean enabled;
     private String imageUrl;
     @Column(length = 500)
-    @Size(max=500,message="About Length Should be Less than 500 Characters")
-    @NotBlank(message="About Field is Required...")
+    @Size(max = 500, message = "About must be at most 500 characters.")
+    @NotBlank(message = "Please add a short description.")
     private String about;
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "user")
@@ -117,8 +117,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", role=" + role
-                + ", enabled=" + enabled + ", imageUrl=" + imageUrl + ", about=" + about + ", contacts=" + contacts
+        return "User [id=" + id + ", name=" + name + ", email=" + email + ", role=" + role + ", enabled=" + enabled
                 + "]";
     }
 

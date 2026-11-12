@@ -1,75 +1,53 @@
-// package com.smart.config;
+package com.smart.config;
 
-// import org.springframework.beans.factory.ObjectProvider;
-// import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
-// import org.springframework.context.annotation.Bean;
-// import org.springframework.context.annotation.Configuration;
-// import org.springframework.security.access.expression.SecurityExpressionHandler;
-// import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-// import org.springframework.security.config.ObjectPostProcessor;
-// import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-// import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-// import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-// import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
-// import org.springframework.security.core.userdetails.UserDetailsService;
-// import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-// import org.springframework.security.web.FilterInvocation;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 
-// import jakarta.servlet.Filter;
+@Configuration
+public class MyConfig {
+    @Bean
+    AuthenticationManager authenticationManager(
+            UserDetailsServiceImpl userDetailsService,
+            PasswordEncoder passwordEncoder) {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider(userDetailsService);
+        provider.setPasswordEncoder(passwordEncoder);
+        provider.setUserDetailsPasswordService(userDetailsService);
+        return new ProviderManager(provider);
+    }
 
+    @Bean
+    SecurityFilterChain applicationSecurity(HttpSecurity http, AuthenticationManager authenticationManager)
+            throws Exception {
+        return http
+                .authenticationManager(authenticationManager)
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/", "/about", "/signup", "/do_register", "/login", "/css/**", "/js/**",
+                                "/img/**")
+                        .permitAll()
+                        .anyRequest().authenticated())
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .loginProcessingUrl("/do_login")
+                        .usernameParameter("email")
+                        .passwordParameter("password")
+                        .defaultSuccessUrl("/user/dashboard", true)
+                        .failureUrl("/login?error"))
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login?logout")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID"))
+                .build();
+    }
 
-// @Configuration
-// @EnableWebSecurity
-// public class MyConfig extends WebSecurityConfiguration {
-
-//     // private final UserDetailsService userDetailsService;
-
-//     // public MyConfig(UserDetailsService userDetailsService) {
-//     //     this.userDetailsService = userDetailsService;
-//     // }
-
-//     // // This class can be used to configure web security settings
-//     // @Bean
-//     // public UserDetailsService getUserDetailsService() {
-//     //     // Replace Object and implementation with your actual bean
-//     //     return new UserDetailsServiceImpl();
-//     // }
-//     // @Bean
-//     // public BCryptPasswordEncoder passwordEncoder() {
-//     //     return new BCryptPasswordEncoder();
-//     // }
-
-//     // @Bean
-//     // public DaoAuthenticationProvider authenticationProvider() {
-//     //     DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-//     //     daoAuthenticationProvider.setUserDetailsService(userDetailsService);
-//     //     daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
-//     //     return daoAuthenticationProvider;
-//     // }
-
-//     // @Override
-//     // public void setFilterChainProxySecurityConfigurer(ObjectPostProcessor<Object> arg0,
-//     //         ConfigurableListableBeanFactory arg1) throws Exception {
-//     //     // TODO Auto-generated method stub
-//     //     super.setFilterChainProxySecurityConfigurer(arg0, arg1);
-//     // }
-
-//     // @Override
-//     // public Filter springSecurityFilterChain(ObjectProvider<HttpSecurity> arg0) throws Exception {
-//     //     // TODO Auto-generated method stub
-//     //     return super.springSecurityFilterChain(arg0);
-//     // }
-
-//     // @Override
-//     // public SecurityExpressionHandler<FilterInvocation> webSecurityExpressionHandler() {
-//     //     // TODO Auto-generated method stub
-//     //     return super.webSecurityExpressionHandler();
-//     // }
-
-//     // //Configure Method
-    
-//     // protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//     //     auth.authenticationProvider(authenticationProvider());
-//     // }
-
-// }
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return new LegacyAwarePasswordEncoder();
+    }
+}

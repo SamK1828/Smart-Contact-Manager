@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base :: layout(~{::section})}">
+  <body>
+    <section class="page-section">
+      <div class="container form-container">
+        <span class="eyebrow">Your account</span>
+        <h1 class="page-title">Profile</h1>
+        <p class="text-secondary">Update the name and details shown in your account.</p>
+        <div class="alert alert-success" role="status" th:if="${param.updated}">Profile saved.</div>
+        <div class="surface-card form-card mt-4">
+          <form th:action="@{/user/profile}" th:object="${profileForm}" method="post">
+            <div class="mb-3">
+              <label class="form-label" for="email">Email address</label>
+              <input class="form-control" id="email" type="email" th:value="${email}" readonly />
+              <div class="form-text">Your sign-in email cannot be changed here.</div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="name">Name</label>
+              <input class="form-control" id="name" th:field="*{name}"
+                th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' : ''" required />
+              <div class="invalid-feedback" th:errors="*{name}"></div>
+            </div>
+            <div class="mb-4">
+              <label class="form-label" for="about">About</label>
+              <textarea class="form-control" id="about" rows="4" maxlength="500" th:field="*{about}"
+                th:classappend="${#fields.hasErrors('about')} ? 'is-invalid' : ''" required></textarea>
+              <div class="invalid-feedback" th:errors="*{about}"></div>
+            </div>
+            <button class="btn btn-primary" type="submit">Save profile</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
