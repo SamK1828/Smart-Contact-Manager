@@ -4,11 +4,12 @@
             "type": "java",
             "name": "Spring Boot-SmartcontactmanagerApplication<smartcontactmanager>",
             "request": "launch",
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}\\smartcontactmanager",
             "mainClass": "com.smart.SmartcontactmanagerApplication",
             "projectName": "smartcontactmanager",
             "args": "",
-            "envFile": "${workspaceFolder}/.env"
+            "envFile": "${workspaceFolder}\\.env",
+            "preLaunchTask": "Maven Compile (wrapper)"
         }
     ]
 }

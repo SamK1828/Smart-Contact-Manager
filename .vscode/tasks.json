@@ -1,0 +1,17 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Maven Compile (wrapper)",
+            "type": "shell",
+            "command": "${workspaceFolder}\\smartcontactmanager\\mvnw.cmd",
+            "args": [
+                "compile"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}\\smartcontactmanager"
+            },
+            "problemMatcher": []
+        }
+    ]
+}
